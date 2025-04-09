@@ -1,9 +1,19 @@
 import java.util.Iterator;
-public class MyLinkedList<T>  implements MyList<T> {
-    private MyNode<T> head;
-    private MyNode<T> tail;
-    private int size;
 
+/**
+ * MyLinkedList is a custom implementation of a doubly linked list.
+ *
+ *
+ * @param <T> the type of elements in this list
+ */
+public class MyLinkedList<T>  implements MyList<T> {
+    private MyNode<T> head; //Ref to the first node
+    private MyNode<T> tail; // Ref to the last node
+    private int size; //Number of elements in the list
+
+    /**
+     * Inner class representing a node in the doubly linked list.
+     */
     private static class MyNode<E>{
         E data;
         MyNode<E> next;
@@ -13,10 +23,21 @@ public class MyLinkedList<T>  implements MyList<T> {
         }
     }
 
+    /**
+     * Retrieves the element at the specified index.
+     *
+     * @param index the index of the element to retrieve
+     * @return the element at the index
+     */
     public T get(int index) {
         return getNode(index).data;
     }
 
+    /**
+     * Adds an element to the end of the list.
+     *
+     * @param newItem the element to add
+     */
     public void add(T newItem) {
         MyNode<T> newNode = new MyNode<>(newItem);
         if (head == null) {
@@ -28,6 +49,14 @@ public class MyLinkedList<T>  implements MyList<T> {
         }
         size++;
     }
+
+    /**
+     * Returns the index of the first occurrence of the specified element in the list.
+     * If the element is not found, returns -1.
+     *
+     * @param object the element to search for
+     * @return the index of the first occurrence of the element, or -1 if not found
+     */
     public int indexOf(Object object) {
         int index = 0;
         for (MyNode<T> current = head; current != null; current = current.next) {
@@ -44,22 +73,39 @@ public class MyLinkedList<T>  implements MyList<T> {
     }
 
 
+    /**
+     * Adds an element to the beginning of the list.
+     *
+     * @param item the element to add
+     */
     public void addFirst(T item){
         MyNode<T> newNode = new MyNode<>(item);
         if(head==null){
             head = tail = newNode;
         }
         else{newNode.next = head;
-            newNode.prev = null;
-            head.prev = newNode;
-            head = newNode;}
+        newNode.prev = null;
+        head.prev = newNode;
+        head = newNode;}
         size++;
     }
 
+    /**
+     * Adds an element to the end of the list.
+     *
+     * @param item the element to add
+     */
     public void addLast(T item){
         add(item);
     }
 
+    /**
+     * Adds an element at the specified index.
+     *
+     * @param index the index where the element should be added
+     * @param item  the element to add
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public void add(int index, T item) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("error");
@@ -79,11 +125,23 @@ public class MyLinkedList<T>  implements MyList<T> {
         }
     }
 
+    /**
+     * Updates the element at the specified index.
+     *
+     * @param index the index of the element to update
+     * @param item  the new value to set
+     */
     public void set(int index, T item){
         MyNode<T> current = getNode(index);
         current.data = item;
     }
 
+    /**
+     * Retrieves the first element in the list.
+     *
+     * @return the first element in the list
+     * @throws IllegalStateException if the list is empty
+     */
     public T getFirst(){
         if(isEmpty()){
             throw new IllegalStateException("empty");
@@ -91,12 +149,24 @@ public class MyLinkedList<T>  implements MyList<T> {
         return head.data;
     }
 
+    /**
+     * Retrieves the last element in the list.
+     *
+     * @return the last element in the list
+     * @throws IllegalStateException if the list is empty
+     */
     public T getLast(){
         if(isEmpty()){
             throw new IllegalStateException("empty");
         }
         return tail.data;
     }
+    /**
+     * Removes the element at the specified index.
+     *
+     * @param index the index of the element to remove
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public void remove(int index){
         MyNode<T> remove = getNode(index);
         if(remove.prev != null){
@@ -112,6 +182,11 @@ public class MyLinkedList<T>  implements MyList<T> {
             tail = remove.prev;
         }
     }
+    /**
+     * Removes the first element in the list.
+     *
+     * @throws IllegalStateException if the list is empty
+     */
     public void removeFirst(){
         if(isEmpty()){
             throw new IllegalStateException("empty");
@@ -125,6 +200,11 @@ public class MyLinkedList<T>  implements MyList<T> {
         }
         size--;
     }
+    /**
+     * Removes the last element in the list.
+     *
+     * @throws IllegalStateException if the list is empty
+     */
     public void removeLast(){
         if(isEmpty()){
             throw new IllegalStateException("error");
@@ -139,6 +219,12 @@ public class MyLinkedList<T>  implements MyList<T> {
         size--;
     }
 
+    /**
+     * Returns the index of the last occurrence of the specified element in the list.
+     *
+     * @param object the element to search for
+     * @return the index of the last occurrence of the element, or -1 if not found
+     */
     public int lastIndexOf(Object object) {
         int index = size - 1;
         for (MyNode<T> current = tail; current != null; current = current.prev) {
@@ -149,11 +235,21 @@ public class MyLinkedList<T>  implements MyList<T> {
         }
         return -1;
     }
-
+    /**
+     * Checks if the specified element exists in the list.
+     *
+     * @param object the element to check
+     * @return true if the element exists, false otherwise
+     */
     public boolean exists(Object object) {
         return indexOf(object) != -1;
     }
 
+    /**
+     * Converts the list to an array.
+     *
+     * @return an array containing all elements in the list
+     */
     public Object[] toArray() {
         Object[] array = new Object[size];
         int index = 0;
@@ -163,11 +259,19 @@ public class MyLinkedList<T>  implements MyList<T> {
         return array;
     }
 
+
+    /**
+     * Removes all elements from the list.
+     */
     public void clear() {
         head = tail = null;
         size = 0;
     }
 
+    /**
+     * Sorts the elements in the list in ascending order.
+     * Assumes that the elements implement the Comparable interface.
+     */
     public void sort() {
         if (size < 2) {
             return;
@@ -183,6 +287,11 @@ public class MyLinkedList<T>  implements MyList<T> {
         }
     }
 
+    /**
+     * Checks if the list is empty.
+     *
+     * @return true if the list is empty, false otherwise
+     */
     public boolean isEmpty(){
         return size == 0;
     }
@@ -227,3 +336,4 @@ public class MyLinkedList<T>  implements MyList<T> {
 
 
 }
+
