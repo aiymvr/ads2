@@ -181,6 +181,7 @@ public class MyLinkedList<T>  implements MyList<T> {
         else{
             tail = remove.prev;
         }
+        size--;
     }
     /**
      * Removes the first element in the list.
