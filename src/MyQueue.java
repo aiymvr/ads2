@@ -1,4 +1,4 @@
-public class MyQueue<T> {
+public class MyQueue<T extends Comparable<T>>{
     private MyLinkedList<T> list;
 
     public MyQueue(){

@@ -6,7 +6,7 @@ import java.util.Iterator;
  *
  * @param <T> the type of elements in this list
  */
-public class MyLinkedList<T>  implements MyList<T> {
+public class MyLinkedList<T extends Comparable<T>> implements MyList<T> {
     private MyNode<T> head; //Ref to the first node
     private MyNode<T> tail; // Ref to the last node
     private int size; //Number of elements in the list
