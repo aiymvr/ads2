@@ -1,18 +1,18 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Testing MyArrayList...");
+        System.out.println("Testing MyArrayList");
         testMyList(new MyArrayList<>());
 
-        System.out.println("\nTesting MyLinkedList...");
+        System.out.println("\nTesting MyLinkedList");
         testMyList(new MyLinkedList<>());
 
-        System.out.println("\nTesting MyStack...");
+        System.out.println("\nTesting MyStack");
         testMyStack();
 
-        System.out.println("\nTesting MyQueue...");
+        System.out.println("\nTesting MyQueue");
         testMyQueue();
 
-        System.out.println("\nTesting MyMinHeap...");
+        System.out.println("\nTesting MyMinHeap");
         testMyMinHeap();
     }
 
