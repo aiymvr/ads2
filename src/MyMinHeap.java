@@ -1,47 +1,98 @@
-public class MyMinHeap<T extends Comparable<T>>{
-    private MyArrayList<T> list;
+/**
+ * MyMinHeap is a custom implementation of a Min-Heap data structure.
+ * The heap is implemented using MyArrayList as the underlying storage.
+ *
+ * @param <T> the type of elements in the heap, which must implement Comparable
+ */
+public class MyMinHeap<T extends Comparable<T>> {
+    private MyArrayList<T> list; 
 
-    public MyMinHeap(){
+    /**
+     * Constructor to initialize an empty Min-Heap.
+     */
+    public MyMinHeap() {
         list = new MyArrayList<>();
     }
 
-    public int size(){
+    /**
+     * Returns the number of elements in the heap.
+     *
+     * @return the size of the heap
+     */
+    public int size() {
         return list.size();
     }
-    public boolean empty(){
+
+    /**
+     * Checks if the heap is empty.
+     *
+     * @return true if the heap is empty, false otherwise
+     */
+    public boolean empty() {
         return list.size() == 0;
     }
-    public T getMin(){
-        if(empty()){
-            throw new IllegalStateException("error");
+
+    /**
+     * Retrieves the minimum element (root) of the heap without removing it.
+     *
+     * @return the minimum element in the heap
+     * @throws IllegalStateException if the heap is empty
+     */
+    public T getMin() {
+        if (empty()) {
+            throw new IllegalStateException("Heap is empty");
         }
         return list.get(0);
     }
-    public void insert(T item){
-        list.add(item);
-        traverseUp(list.size()-1);
+
+    /**
+     * Inserts a new element into the heap and restores the heap property.
+     *
+     * @param item the element to insert
+     */
+    public void insert(T item) {
+        list.add(item); // Add the new element to the end of the list
+        traverseUp(list.size() - 1); // Restore the heap property by moving the element up
     }
-    public T extractMin(){
-        if(empty()){
-            throw new IllegalStateException("error");
+
+    /**
+     * Removes and returns the minimum element (root) of the heap.
+     *
+     * @return the minimum element in the heap
+     * @throws IllegalStateException if the heap is empty
+     */
+    public T extractMin() {
+        if (empty()) {
+            throw new IllegalStateException("Heap is empty");
         }
-        T min = list.get(0);
-        list.set(0, list.get(list.size()-1));
-        list.remove(list.size()-1);
-        heapify(0);
+        T min = list.get(0); // Get the root element
+        list.set(0, list.get(list.size() - 1)); // Replace the root with the last element
+        list.remove(list.size() - 1); // Remove the last element
+        heapify(0); // Restore the heap property by moving the root element down
         return min;
     }
 
-
-    private void swap(int i, int j){
+    /**
+     * Swaps two elements in the heap by their indices.
+     *
+     * @param i the index of the first element
+     * @param j the index of the second element
+     */
+    private void swap(int i, int j) {
         T temp = list.get(i);
         list.set(i, list.get(j));
         list.set(j, temp);
     }
-    private void traverseUp(int index){
-        while(index>0){
+
+    /**
+     * Restores the heap property by moving an element up the heap.
+     *
+     * @param index the index of the element to move up
+     */
+    private void traverseUp(int index) {
+        while (index > 0) {
             int parentIndex = parentOf(index);
-            if(list.get(index).compareTo(list.get(parentIndex))>=0){
+            if (list.get(index).compareTo(list.get(parentIndex)) >= 0) {
                 break;
             }
             swap(index, parentIndex);
@@ -49,30 +100,10 @@ public class MyMinHeap<T extends Comparable<T>>{
         }
     }
 
-    private int parentOf(int index){
-        return (index-1)/2;
-    }
-    private int leftChildOf(int index){
-        return 2*index+1;
-    }
-    private int rightChildOf(int index){
-       return  2*index+2;
-    }
-
-    private void heapify(int index){
-        int leftChild = leftChildOf(index);
-        int rightChild = rightChildOf(index);
-        int smallest = index;
-
-        if(leftChild<list.size() && list.get(leftChild).compareTo(list.get(smallest)) < 0){
-            smallest = leftChild;
-        }
-        if(rightChild < list.size() && list.get(rightChild).compareTo(list.get(smallest))<0){
-            smallest = rightChild;
-        }
-        if(smallest !=index){
-            swap(index, smallest);
-            heapify(smallest);
-        }
-    }
-}
+    /**
+     * Returns the index of the parent of the given element.
+     *
+     * @param index the index of the element
+     * @return the index of the parent
+     */
+    private int parentOf(int index)
